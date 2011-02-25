@@ -90,8 +90,6 @@ INSERT INTO `image` (`jeu_id`, `image_contenu`) VALUES
 (3, LOAD_FILE('image001.jpg')); 
 
 
-
-
 -- --------------------------------------------------------
 
 --
