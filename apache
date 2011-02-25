@@ -1,0 +1,6 @@
+#!/bin/bash
+
+scriptdir=$(cd ${0%/*} && pwd -P )
+echo $scriptdir
+
+/usr/sbin/httpd -d $scriptdir -f httpd.conf -k $1

@@ -14,7 +14,7 @@ $link = mysql_connect('localhost', 'root', '')
 mysql_select_db('projet') or die('Impossible de sélectionner la base de données');
 
 // Exécution des requêtes SQL
-$query = 'SELECT * FROM jeux,editeurs,plateformes,jeux_pf WHERE jeux.id_editeur=editeurs.id_editeur AND jeux.id_jeu=jeux_pf.id_jeu AND plateformes.id_pf=jeux_pf.id_pf';
+$query = 'SELECT * FROM package NATURAL JOIN jeu NATURAL JOIN editeur NATURAL  JOIN plateforme';
 $result = mysql_query($query) or die('Échec de la requête : ' . mysql_error());
 
 // Affichage des résultats en HTML
@@ -32,33 +32,18 @@ echo "<tr>";
 	echo "<td>Prix de la console</td>";
 echo "</tr>";
 	
-while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-	$id_jeu = $line["id_jeu"];
-	$nom_jeu = $line["nom_jeu"];
-	$annee_jeu = $line["annee_jeu"];
-	$prix_jeu = $line["prix_jeu"];
-	$image_jeu = $line["image_jeu"];
-	$id_editeur = $line["id_editeur"];
-	$nom_editeur = $line["nom_editeur"];
-	$pays_editeur = $line["pays_editeur"];
-	$annee_editeur = $line["annee_editeur"];
-	$id_pf = $line["id_pf"];
-	$nom_pf = $line["nom_pf"];
-	$constructeur_pf = $line["constructeur_pf"];
-	$prix_pf = $line["prix_pf"];
-	
-	
+while ($l = mysql_fetch_array($result, MYSQL_ASSOC)) {
     echo "<tr>";
-		echo "<td><a href=\"projet_modif-all.php?id=$id_jeu\">$nom_jeu</a></td>";
-		echo "<td>$annee_jeu</td>";
-		echo "<td>$prix_jeu</td>";
-		echo "<td><img src='projet_image.php?id_jeu=$id_jeu'/></td>";
-		echo "<td><a href=\"projet_modif-all.php?id=$id_editeur\">$nom_editeur</a></td>";
-		echo "<td>$pays_editeur</td>";
-		echo "<td>$annee_editeur</td>";
-		echo "<td><a href=\"projet_modif-all.php?id=$id_pf\">$nom_pf</a></td>";
-		echo "<td>$constructeur_pf</td>";
-		echo "<td>$prix_pf</td>";					
+		echo "<td><a href=\"jeu.php?jeu_id={$l['jeu_id']}\">{$l['jeu_nom']}</a></td>";
+		echo "<td>{$l['jeu_annee']}</td>";
+		echo "<td>{$l['package_prix']}</td>";
+		echo "<td><img src='projet_image.php?jeu_id={$l['jeu_id']}'/></td>";
+		echo "<td><a href='editeur.php?editeur_id={$l['editeur_id']}'>{$l['editeur_nom']}</a></td>";
+		echo "<td>{$l['editeur_pays']}</td>";
+		echo "<td>{$l['editeur_annee']}</td>";
+		echo "<td><a href=\"plateforme.php?plateforme_id={$l['plateforme_id']}\">{$l['plateforme_nom']}</a></td>";
+		echo "<td>{$l['plateforme_constructeur']}</td>";
+		echo "<td>{$l['plateforme_prix']}</td>";					
 	echo "</tr>";		
 }
   
@@ -71,14 +56,17 @@ mysql_free_result($result);
 mysql_close($link);
 ?>
 
-<form method=get action=projet_crea-jeu.php>
+<form method=get action='jeu.php'>
 	<input type="submit" value="Créer un jeu" />
 </form>
-<form method=get action=projet_crea-editeur.php>
+<form method=get action='editeur.php'>
 	<input type="submit" value="Créer un éditeur" />
 </form>
-<form method=get action=projet_crea-pf.php>
+<form method=get action='plateforme.php'>
 	<input type="submit" value="Créer une console" />
+</form>
+<form method=get action='package.php'>
+	<input type='submit' value='Créer une distribution' />
 </form>
 
 <a href="projet_hp.php">retour vers la page d'accueil</a>

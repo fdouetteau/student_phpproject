@@ -7,6 +7,9 @@
 -- Version du serveur: 5.1.44
 -- Version de PHP: 5.2.13
 
+
+USE 'projet'
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
@@ -22,46 +25,23 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `all`
---
-
-DROP TABLE IF EXISTS `all`;
-CREATE TABLE IF NOT EXISTS `all` (
-  `id_jeux` int(11) NOT NULL,
-  `id_editeurs` int(11) NOT NULL,
-  `id_pf` int(11) NOT NULL,
-  PRIMARY KEY (`id_jeux`,`id_editeurs`,`id_pf`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `all`
---
-
-INSERT INTO `all` (`id_jeux`, `id_editeurs`, `id_pf`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `editeurs`
 --
 
-DROP TABLE IF EXISTS `editeurs`;
-CREATE TABLE IF NOT EXISTS `editeurs` (
-  `id_editeurs` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_editeur` varchar(80) NOT NULL,
-  `pays_editeur` varchar(80) NOT NULL,
-  `annee_editeur` year(4) NOT NULL,
-  PRIMARY KEY (`id_editeurs`)
+DROP TABLE IF EXISTS `editeur`;
+CREATE TABLE IF NOT EXISTS `editeur` (
+  `editeur_id` int(11) NOT NULL AUTO_INCREMENT,
+  `editeur_nom` varchar(80) NOT NULL,
+  `editeur_pays` varchar(80) NOT NULL,
+  `editeur_annee` year(4) NOT NULL,
+  PRIMARY KEY (`editeur_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `editeurs`
 --
 
-INSERT INTO `editeurs` (`id_editeurs`, `nom_editeur`, `pays_editeur`, `annee_editeur`) VALUES
+INSERT INTO `editeur` (`editeur_id`, `editeur_nom`, `editeur_pays`, `editeur_annee`) VALUES
 (1, 'Nintendo', 'Japon', 1972),
 (2, 'EA Sports', 'USA', 1982),
 (3, 'Sega', 'Japon', 1954);
@@ -72,23 +52,23 @@ INSERT INTO `editeurs` (`id_editeurs`, `nom_editeur`, `pays_editeur`, `annee_edi
 -- Structure de la table `jeux`
 --
 
-DROP TABLE IF EXISTS `jeux`;
-CREATE TABLE IF NOT EXISTS `jeux` (
-  `id_jeux` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_jeu` varchar(80) NOT NULL,
-  `annee_jeu` year(4) NOT NULL,
-  `prix_jeu` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`id_jeux`)
+DROP TABLE IF EXISTS `jeu`;
+CREATE TABLE IF NOT EXISTS `jeu` (
+  `jeu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `jeu_nom` varchar(80) NOT NULL,
+  `jeu_annee` year(4) NOT NULL,
+  `editeur_id` int(11) NOT NULL, 
+  PRIMARY KEY (`jeu_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- Contenu de la table `jeux`
 --
 
-INSERT INTO `jeux` (`id_jeux`, `nom_jeu`, `annee_jeu`, `prix_jeu`) VALUES
-(3, 'Sonic', 1991, 20),
-(2, 'FIFA11', 2011, 60),
-(1, 'Mario', 1983, 20);
+INSERT INTO `jeu` (`jeu_id`, `jeu_nom`, `jeu_annee`, `editeur_id`) VALUES
+(3, 'Sonic', 1991, 3),
+(2, 'FIFA11', 2011, 2),
+(1, 'Mario', 1983, 1);
 
 -- --------------------------------------------------------
 
@@ -96,20 +76,40 @@ INSERT INTO `jeux` (`id_jeux`, `nom_jeu`, `annee_jeu`, `prix_jeu`) VALUES
 -- Structure de la table `plateformes`
 --
 
-DROP TABLE IF EXISTS `plateformes`;
-CREATE TABLE IF NOT EXISTS `plateformes` (
-  `id_pf` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_pf` varchar(80) NOT NULL,
-  `constructeur_pf` varchar(80) NOT NULL,
-  `prix_pf` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`id_pf`)
+DROP TABLE IF EXISTS `plateforme`;
+CREATE TABLE IF NOT EXISTS `plateforme` (
+  `plateforme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `plateforme_nom` varchar(80) NOT NULL,
+  `plateforme_constructeur` varchar(80) NOT NULL,
+  `plateforme_prix` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`plateforme_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `plateformes`
 --
 
-INSERT INTO `plateformes` (`id_pf`, `nom_pf`, `constructeur_pf`, `prix_pf`) VALUES
+INSERT INTO `plateforme` (`plateforme_id`, `plateforme_nom`, `plateforme_constructeur`, `plateforme_prix`) VALUES
 (1, 'NES', 'Nintendo', 100),
 (2, 'Xbox 360', 'Microsoft', 150),
 (3, 'Mega Drive', 'Sega', 100);
+
+
+DROP TABLE IF EXISTS `package`;
+CREATE TABLE IF NOT EXISTS `package` (
+  `jeu_id` int(11) NOT NULL, 
+  `plateforme_id` int(11) NOT NULL,
+  `package_prix` decimal(10,0) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `package` (`jeu_id`, `plateforme_id`, `package_prix`) VALUES
+(1, 1, 20), 
+(2, 1, 30),
+(2, 2, 50),
+(2, 3, 40),
+(3, 2, 30),
+(3, 3, 20);
+
+
+ 
