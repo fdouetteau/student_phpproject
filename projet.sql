@@ -70,6 +70,28 @@ INSERT INTO `jeu` (`jeu_id`, `jeu_nom`, `jeu_annee`, `editeur_id`) VALUES
 (2, 'FIFA11', 2011, 2),
 (1, 'Mario', 1983, 1);
 
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `image`
+--
+
+DROP TABLE IF EXISTS `image`; 
+CREATE TABLE IF NOT EXISTS `image` (
+	`jeu_id` int(11) NOT NULL, 
+	`image_contenu` BLOB NOT NULL, 
+	PRIMARY KEY (`jeu_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
+
+INSERT INTO `image` (`jeu_id`, `image_contenu`) VALUES
+(1, LOAD_FILE('image001.jpg')), 
+(2, LOAD_FILE('image001.jpg')), 
+(3, LOAD_FILE('image001.jpg')); 
+
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -97,19 +119,21 @@ INSERT INTO `plateforme` (`plateforme_id`, `plateforme_nom`, `plateforme_constru
 
 DROP TABLE IF EXISTS `package`;
 CREATE TABLE IF NOT EXISTS `package` (
+  `package_id` int(11) NOT NULL AUTO_INCREMENT, 
   `jeu_id` int(11) NOT NULL, 
   `plateforme_id` int(11) NOT NULL,
-  `package_prix` decimal(10,0) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `package_prix` decimal(10,0) NOT NULL, 
+   PRIMARY KEY (`package_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=7;
 
 
-INSERT INTO `package` (`jeu_id`, `plateforme_id`, `package_prix`) VALUES
-(1, 1, 20), 
-(2, 1, 30),
-(2, 2, 50),
-(2, 3, 40),
-(3, 2, 30),
-(3, 3, 20);
+INSERT INTO `package` (`package_id`, `jeu_id`, `plateforme_id`, `package_prix`) VALUES
+(1, 1, 1, 20), 
+(2, 2, 1, 30),
+(3, 2, 2, 50),
+(4, 2, 3, 40),
+(5, 3, 2, 30),
+(6, 3, 3, 20);
 
 
  
