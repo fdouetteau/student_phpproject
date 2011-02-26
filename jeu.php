@@ -79,7 +79,19 @@ if ($jeu_id) {
 	}
 ?>
 </form>
-    
+
+<?php
+   echo "<img src='projet_image.php?jeu_id=$jeu_id' />"; 
+?>
+
+<form method='POST' action='upload_image.php' enctype="multipart/form-data">
+	 <?php
+	echo "<input type='hidden' name='jeu_id' value='$jeu_id' />";  
+	 ?>
+	<input type="file" name="image"/>
+	<input type="submit" value="Changer image">
+</form>
+
 <a href="projet_all.php">Retour vers la liste des jeux</a>
 
 </body>
