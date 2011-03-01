@@ -1,4 +1,5 @@
 <?php
+// là c'est pour afficher une image
 // Connexion et sélection de la base
 $link = mysql_connect('localhost', 'root', '')
     or die('Impossible de se connecter : ' . mysql_error());
