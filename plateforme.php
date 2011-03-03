@@ -33,6 +33,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	$msg =  '<i>plateforme modifié</i>'; 
 	$plateforme_id = $_POST['plateforme_id']; 
 	
+} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+		$query = sprintf("DELETE FROM package, plateforme USING package NATURAL JOIN plateforme WHERE plateforme.plateforme_id='%s'", 
+				mysql_real_escape_string($_POST['plateforme_id'])); 
+		$result = mysql_query("$query") or die ("Impossible d'effacer la plateforme" . mysql_error()); 
+
+
+		$msg = '<i>La plateforme et les distributions de jeu associées ont été effacées. Vous pouvez créer une nouvelle plateforme.</i>'; 
+		$plateforme_id = null; 
+
 } else if (isset($_GET['plateforme_id'])) {
 	$plateforme_id = $_GET['plateforme_id']; 
 	$msg = ''; 
@@ -70,7 +79,13 @@ if ($plateforme_id) {
 	}
 ?>
 </form>
-    
+  
+<form method='POST' action='plateforme.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
+	<input type="hidden" name="action" value="delete"/>
+	<input type="hidden" name="plateforme_id" value="<?php echo $plateforme_id?>"/>
+	<input type="submit" value="Supprimer cette plateforme (et toutes les distributions de jeux associées)" />
+</form>
+  
 <a href="projet_all.php">Retour vers la liste des jeux</a>
 
 </body>

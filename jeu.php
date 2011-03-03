@@ -33,6 +33,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	$msg =  '<i>Jeu modifié</i>'; 
 	$jeu_id = $_POST['jeu_id']; 
 	
+} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+	$query = sprintf("DELETE FROM package, jeu USING package NATURAL JOIN jeu WHERE jeu.jeu_id='%s'", 
+			mysql_real_escape_string($_POST['jeu_id'])); 
+	$result = mysql_query("$query") or die ("Impossible d'effacer le jeu" . mysql_error()); 
+
+	
+	$msg = '<i>Jeu effacé. Vous pouvez créer un nouveau jeu.</i>'; 
+	$jeu_id = null; 
+	
 } else if (isset($_GET['jeu_id'])) {
 	$jeu_id = $_GET['jeu_id']; 
 	$msg = ''; 
@@ -94,6 +103,12 @@ if ($jeu_id) {
 	 ?>
 	<input type="file" name="image"/>
 	<input type="submit" value="Changer image">
+</form>
+
+<form method='POST' action='jeu.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
+	<input type="hidden" name="action" value="delete"/>
+	<input type="hidden" name="jeu_id" value="<?php echo $jeu_id?>"/>
+	<input type="submit" value="Supprimer ce jeu (et tous les packages associés)" />
 </form>
 
 <a href="projet_all.php">Retour vers la liste des jeux</a>

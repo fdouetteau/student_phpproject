@@ -39,7 +39,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	
 	$msg =  '<i>Editeur modifié</i>'; 
 	$editeur_id = $_POST['editeur_id']; 
-	
+} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+		$query = sprintf("DELETE FROM package, jeu, editeur USING package NATURAL JOIN jeu NATURAL JOIN editeur WHERE editeur.editeur_id='%s'", 
+				mysql_real_escape_string($_POST['editeur_id'])); 
+		$result = mysql_query("$query") or die ("Impossible d'effacer le jeu" . mysql_error()); 
+
+		$msg = '<i>Editeur effacé. Vous pouvez créer un nouvel editeur</i>'; 
+		$editeur_id = null; 
+
 } else if (isset($_GET['editeur_id'])) {
 // là c'est pour le read = quand je clique, dans le tableau, sur le nom d'un jeu, d'un éditeur ou d'une plateforme
 // (c'est léquivalent de noltre ancienne page avec le formulaire prérempli pour update)
@@ -91,6 +98,12 @@ if ($editeur_id) {
 ?>
 </form>
     
+<form method='POST' action='editeur.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
+	<input type="hidden" name="action" value="delete"/>
+	<input type="hidden" name="editeur_id" value="<?php echo $editeur_id?>"/>
+	<input type="submit" value="Supprimer ce jeu (et tous les packages associés)" />
+</form>
+
 <a href="projet_all.php">Retour vers la liste des jeux</a>
 
 </body>

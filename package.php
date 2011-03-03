@@ -32,7 +32,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	
 	$msg =  '<i>Distribution  modifié</i>'; 
 	$package_id = $_POST['package_id']; 
-	
+
+} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+		$query = sprintf("DELETE FROM package WHERE package_id='%s'", 
+				mysql_real_escape_string($_POST['package_id'])); 
+		$result = mysql_query("$query") or die ("Impossible d'effacer la distribution" . mysql_error()); 
+
+		$msg = '<i>Distribution de jeu effacé. Vous pouvez créer une nouvelle distribution.</i>'; 
+		$package_id = null; 
+
 } else if (isset($_GET['package_id'])) {
 	$package_id = $_GET['package_id']; 
 	$msg = ''; 
@@ -87,6 +95,12 @@ if ($package_id) {
 		echo '<p><input type="submit" value="Modifier"/></p>';
 	}
 ?>
+</form>
+
+<form method='POST' action='package.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
+	<input type="hidden" name="action" value="delete"/>
+	<input type="hidden" name="package_id" value="<?php echo $package_id?>"/>
+	<input type="submit" value="Supprimer ce package" />
 </form>
     
 <a href="projet_all.php">Retour vers la liste des jeux</a>
