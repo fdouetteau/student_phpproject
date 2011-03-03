@@ -11,7 +11,25 @@ mysql_select_db('projet') or die('Impossible de sélectionner la base de donnée
 
 // Suivant les paramètres: affichage d'un jeu existant, création d'un nouveau jeu, confirmation de création ...
 
-if (isset($_POST['action']) && $_POST['action'] == 'create') {
+
+if (isset($_GET['jeu_id'])) { // READ
+	$jeu_id = $_GET['jeu_id']; 
+	$msg = '';
+} else if (isset($_POST['action']) && $_POST['action'] == 'update') { // UPDATE
+		$query = sprintf("UPDATE jeu SET jeu_nom='%s', jeu_annee='%s', editeur_id = '%s' WHERE jeu_id='%s'", 
+				mysql_real_escape_string($_POST['jeu_nom']), 
+				mysql_real_escape_string($_POST['jeu_annee']), 
+				mysql_real_escape_string($_POST['editeur_id']), 
+				mysql_real_escape_string($_POST['jeu_id'])); 
+
+		$result = mysql_query($query) or die ("Impossible de modifier le jeu"); 
+
+		$msg =  '<i>Jeu modifié</i>'; 
+		$jeu_id = $_POST['jeu_id']; 
+} else if (!isset($_POST['action'])) { // NEW 
+	$jeu_id = null; 
+	$msg = ''; 
+} else if (isset($_POST['action']) && $_POST['action'] == 'create') { // CREATE 
 	$query = sprintf("INSERT INTO jeu (`jeu_nom`, `jeu_annee`, `editeur_id`) VALUES ('%s', '%s', '%s')", 
 					mysql_real_escape_string($_POST['jeu_nom']), 
 					mysql_real_escape_string($_POST['jeu_annee']), 
@@ -21,19 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 		
 	$msg =  '<i>Nouveau jeu créé</i>'; 	
 	$jeu_id = mysql_insert_id(); 
-} else if (isset($_POST['action']) && $_POST['action'] == 'update') {
-	$query = sprintf("UPDATE jeu SET jeu_nom='%s', jeu_annee='%s', editeur_id = '%s' WHERE jeu_id='%s'", 
-			mysql_real_escape_string($_POST['jeu_nom']), 
-			mysql_real_escape_string($_POST['jeu_annee']), 
-			mysql_real_escape_string($_POST['editeur_id']), 
-			mysql_real_escape_string($_POST['jeu_id'])); 
-			
-	$result = mysql_query($query) or die ("Impossible de modifier le jeu"); 
-	
-	$msg =  '<i>Jeu modifié</i>'; 
-	$jeu_id = $_POST['jeu_id']; 
-	
-} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+} else if (isset($_POST['action']) && $_POST['action'] == 'delete') {  // DELETE
 	$query = sprintf("DELETE FROM package, jeu USING package NATURAL JOIN jeu WHERE jeu.jeu_id='%s'", 
 			mysql_real_escape_string($_POST['jeu_id'])); 
 	$result = mysql_query("$query") or die ("Impossible d'effacer le jeu" . mysql_error()); 
@@ -41,14 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	
 	$msg = '<i>Jeu effacé. Vous pouvez créer un nouveau jeu.</i>'; 
 	$jeu_id = null; 
-	
-} else if (isset($_GET['jeu_id'])) {
-	$jeu_id = $_GET['jeu_id']; 
-	$msg = ''; 
-} else {
-	$jeu_id = null; 
-	$msg = ''; 
-}
+} 
 
 if ($jeu_id) {
 	$query = 'SELECT * FROM jeu NATURAL JOIN editeur  WHERE jeu_id=' . $jeu_id;

@@ -11,7 +11,25 @@ mysql_select_db('projet') or die('Impossible de sélectionner la base de donnée
 
 // Suivant les paramètres: affichage d'un jeu existant, création d'un nouveau jeu, confirmation de création ...
 
-if (isset($_POST['action']) && $_POST['action'] == 'create') {
+
+if (isset($_GET['package_id'])) {
+	$package_id = $_GET['package_id']; 
+	$msg = '';
+} else if (isset($_POST['action']) && $_POST['action'] == 'update') {
+		$query = sprintf("UPDATE package SET jeu_id='%s', plateforme_id='%s', prix = '%s' WHERE package_id='%s'", 
+				mysql_real_escape_string($_POST['jeu_id']), 
+				mysql_real_escape_string($_POST['plateforme_id']), 
+				mysql_real_escape_string($_POST['prix']), 
+				mysql_real_escape_string($_POST['package_id'])); 
+
+		$result = mysql_query($query) or die ("Impossible de modifier le jeu"); 
+
+		$msg =  '<i>Distribution  modifié</i>'; 
+		$package_id = $_POST['package_id']; 
+} else if (!isset($_POST['action'])) {
+	$package_id = null; 
+	$msg = ''; 
+} else if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	$query = sprintf("INSERT INTO package (`jeu_id`, `plateforme_id`, `package_prix`) VALUES ('%s', '%s', '%s')", 
 					mysql_real_escape_string($_POST['jeu_id']), 
 					mysql_real_escape_string($_POST['plateforme_id']), 
@@ -21,17 +39,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 		
 	$msg =  '<i>Nouvelle distribution crée</i>'; 	
 	$package_id = mysql_insert_id(); 
-} else if (isset($_POST['action']) && $_POST['action'] == 'update') {
-	$query = sprintf("UPDATE package SET jeu_id='%s', plateforme_id='%s', prix = '%s' WHERE package_id='%s'", 
-			mysql_real_escape_string($_POST['jeu_id']), 
-			mysql_real_escape_string($_POST['plateforme_id']), 
-			mysql_real_escape_string($_POST['prix']), 
-			mysql_real_escape_string($_POST['package_id'])); 
-			
-	$result = mysql_query($query) or die ("Impossible de modifier le jeu"); 
-	
-	$msg =  '<i>Distribution  modifié</i>'; 
-	$package_id = $_POST['package_id']; 
 
 } else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
 		$query = sprintf("DELETE FROM package WHERE package_id='%s'", 
@@ -40,14 +47,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 
 		$msg = '<i>Distribution de jeu effacé. Vous pouvez créer une nouvelle distribution.</i>'; 
 		$package_id = null; 
+} 
 
-} else if (isset($_GET['package_id'])) {
-	$package_id = $_GET['package_id']; 
-	$msg = ''; 
-} else {
-	$package_id = null; 
-	$msg = ''; 
-}
 
 if ($package_id) {
 	$query = 'SELECT * FROM package NATURAL JOIN plateforme NATURAL JOIN jeu  WHERE package_id=' . $package_id;

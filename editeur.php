@@ -11,7 +11,31 @@ mysql_select_db('projet') or die('Impossible de sélectionner la base de donnée
 
 // Suivant les paramètres: affichage d'un editeur existant, création d'un nouveau editeur, confirmation de création ...
 
-if (isset($_POST['action']) && $_POST['action'] == 'create') {
+
+
+if (isset($_GET['editeur_id'])) { // READ
+// là c'est pour le read = quand je clique, dans le tableau, sur le nom d'un jeu, d'un éditeur ou d'une plateforme
+// (c'est léquivalent de noltre ancienne page avec le formulaire prérempli pour update)
+	$editeur_id = $_GET['editeur_id']; 
+	$msg = '';
+
+} else if (isset($_POST['action']) && $_POST['action'] == 'update') {
+	// (c'est léquivalent de noltre ancienne page update OK)
+		$query = sprintf("UPDATE editeur SET editeur_nom='%s', editeur_annee='%s', editeur_pays = '%s' WHERE editeur_id='%s'", 
+				mysql_real_escape_string($_POST['editeur_nom']), 
+				mysql_real_escape_string($_POST['editeur_annee']), 
+				mysql_real_escape_string($_POST['editeur_pays']), 
+				mysql_real_escape_string($_POST['editeur_id'])); 
+
+		$result = mysql_query($query) or die ("Impossible de modifier l'éditeur"); 
+
+		$msg =  '<i>Editeur modifié</i>'; 
+		$editeur_id = $_POST['editeur_id'];
+} else if (!isset($_POST['action'])) {
+		// // (c'est léquivalent de noltre ancienne page avec le formulaire vide pour création)
+			$editeur_id = null; 
+			$msg = ''; 
+} else if (isset($_POST['action']) && $_POST['action'] == 'create') {
 // = si je dis "action" et que "action" = ce que j'ai dit qui s'appelait "create", alors:
 // (c'est léquivalent de noltre ancienne page create OK)
 	$query = sprintf("INSERT INTO editeur (`editeur_nom`, `editeur_annee`, `editeur_pays`) VALUES ('%s', '%s', '%s')", 
@@ -27,18 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 	// le message qui sera généré lorsque la requête sera effectuée
 	$editeur_id = mysql_insert_id(); 
 	// récupération de l'ID de l'éditeur qui a été créé grâce à "mysql_insert_id" / c'est pour insérer la donnée insérée dans la page de l'insert / c'est pour récupérer la valeur de l'auto-incrémentation
-} else if (isset($_POST['action']) && $_POST['action'] == 'update') {
-// (c'est léquivalent de noltre ancienne page update OK)
-	$query = sprintf("UPDATE editeur SET editeur_nom='%s', editeur_annee='%s', editeur_pays = '%s' WHERE editeur_id='%s'", 
-			mysql_real_escape_string($_POST['editeur_nom']), 
-			mysql_real_escape_string($_POST['editeur_annee']), 
-			mysql_real_escape_string($_POST['editeur_pays']), 
-			mysql_real_escape_string($_POST['editeur_id'])); 
-			
-	$result = mysql_query($query) or die ("Impossible de modifier l'éditeur"); 
-	
-	$msg =  '<i>Editeur modifié</i>'; 
-	$editeur_id = $_POST['editeur_id']; 
+
 } else if (isset($_POST['action']) && $_POST['action'] == 'delete') {
 		$query = sprintf("DELETE FROM package, jeu, editeur USING package NATURAL JOIN jeu NATURAL JOIN editeur WHERE editeur.editeur_id='%s'", 
 				mysql_real_escape_string($_POST['editeur_id'])); 
@@ -47,16 +60,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
 		$msg = '<i>Editeur effacé. Vous pouvez créer un nouvel editeur</i>'; 
 		$editeur_id = null; 
 
-} else if (isset($_GET['editeur_id'])) {
-// là c'est pour le read = quand je clique, dans le tableau, sur le nom d'un jeu, d'un éditeur ou d'une plateforme
-// (c'est léquivalent de noltre ancienne page avec le formulaire prérempli pour update)
-	$editeur_id = $_GET['editeur_id']; 
-	$msg = ''; 
-} else {
-// // (c'est léquivalent de noltre ancienne page avec le formulaire vide pour création)
-	$editeur_id = null; 
-	$msg = ''; 
-}
+} 
 
 if ($editeur_id) {
 // et dans tous les cas, sauf en cas de formulaire vide, je veux afficher la valeur de l'éditeru courant: soit celui que je veux modifier, soit celui que je viens de modifier, soit celui que je viens de créer, d'où la requête suivante:
