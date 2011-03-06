@@ -2,11 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Liste jeux</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<title>Game On!!!</title>
 </head>
-
 <body>
-
+<div id="wrap">
+		<div id="innerheader">	
+		</div>		
+		<div id="content">
+		<div class="side_column">		
+			<img src="images/left.jpg" />			
+		</div>
+			<div id="middle" >	
 <?php
 // Connexion et sélection de la base
 $link = mysql_connect('localhost', 'root', '')
@@ -55,21 +62,37 @@ mysql_free_result($result);
 // Fermeture de la connexion
 mysql_close($link);
 ?>
-
+<div>
 <form method=get action='jeu.php'>
-	<input type="submit" value="Créer un jeu" />
+	<input type="submit" value="Créer un jeu" class="button"/>
 </form>
+</div>
+<div>
 <form method=get action='editeur.php'>
-	<input type="submit" value="Créer un éditeur" />
+	<input type="submit" value="Créer un éditeur" class="button"/>
 </form>
+</div>
+<div>
 <form method=get action='plateforme.php'>
-	<input type="submit" value="Créer une console" />
+	<input type="submit" value="Créer une console" class="button"/>
 </form>
+</div>
+<div>
 <form method=get action='package.php'>
-	<input type='submit' value='Créer une distribution' />
+	<input type='submit' value='Créer une distribution' class="button"/>
 </form>
-
-<a href="projet_hp.php">retour vers la page d'accueil</a>
-
+</div>
+<div>
+<a href="projet_hp.php"><img src="images/buttonRetour.png" /></a>
+</div>
+		</div>
+	<div class="side_column" id="right">
+				<img src="images/right.jpg"/>		
+		</div>		
+	</div>	
+	<div id="footer">
+		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+	</div>
+</div>
 </body>
 </html>

@@ -2,7 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<link rel="stylesheet" type="text/css" href="style.css" />
+<title>Game On!!!</title>
+</head>
+<body>
+<div id="wrap">
+		<div id="innerheader">	
+		</div>		
+		<div id="content">
+		<div class="side_column">		
+			<img src="images/left.jpg" />			
+		</div>
+		<div id="middle" >	
 <?php
 // Connexion et sélection de la base
 $link = mysql_connect('localhost', 'root', '')
@@ -73,11 +84,11 @@ if ($plateforme_id) {
      <p>Prix: <input name="plateforme_prix" type="text" value="<?php if($l) echo $l['plateforme_prix']; ?>" /></p> 
 <?php	if ($l == null) {
 		echo '<input type="hidden" name="action" value="create" />';
-		echo '<p><input type="submit" value="Créer"/></p>';
+		echo '<p><input type="submit" value="Créer" class="button"/></p>';
 	} else {
 		echo '<input type="hidden" name="action" value="update" />';
 		echo "<input type='hidden' name='plateforme_id' value='$plateforme_id' />";
-		echo '<p><input type="submit" value="Modifier"/></p>';
+		echo '<p><input type="submit" value="Modifier" class="button"/></p>';
 	}
 ?>
 </form>
@@ -85,10 +96,18 @@ if ($plateforme_id) {
 <form method='POST' action='plateforme.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
 	<input type="hidden" name="action" value="delete"/>
 	<input type="hidden" name="plateforme_id" value="<?php echo $plateforme_id?>"/>
-	<input type="submit" value="Supprimer cette plateforme (et toutes les distributions de jeux associées)" />
+	<input type="submit" value="Supprimer cette plateforme et toutes les distributions de jeux associées)"  class="button"/>
 </form>
   
-<a href="projet_all.php">Retour vers la liste des jeux</a>
-
+<a href="projet_all.php"><img src="images/buttonRJ.png" /></a>
+		</div>
+<div class="side_column" id="right">
+				<img src="images/right.jpg"/>		
+		</div>		
+	</div>	
+	<div id="footer">
+		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+	</div>
+</div>
 </body>
 </html>

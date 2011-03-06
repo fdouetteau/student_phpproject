@@ -2,18 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Suppression</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<title>Game On!!!</title>
 </head>
-
 <body>
-
-Bienvenue sur <i>nom du site</i>!<br />
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ligula enim, fermentum id tristique nec, scelerisque ac lorem. Morbi in gravida turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ultrices pulvinar leo, at placerat sapien volutpat at. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi eu ipsum metus. 
-
+<div id="wrap">
+		<div id="innerheader">	
+		</div>		
+		<div id="content">
+		<div class="side_column">		
+			<img src="images/left.jpg" />			
+		</div>
+			<div id="middle">			
+			<h1>Bienvenue sur Game On!!!</h1>
+			<div class="content">				
+				<h2>Découvez ou redécouvrez vos jeux favoris</h2>				
+<br/>Sur Game On, première plate-forme e-commerce de jeux vidéos en Europe, vous allez pouvoir découvrir ou redécouvrir tous vos jeux préférés: rétro-gaming et jeux récents. Tout ici est fait pour que vous puissiez passer des heures et des heures dans votre canapé devant votre console ou alors bien au chaud devant votre ordinateur.<br/>
+Laissez vous tenter...<br/><br/>
 <form method=get action=projet_all.php>
-	<input type="submit" value="Accédez à notre liste de jeux" />
-</form>
-
+	<input type="submit" value="Découvrez nos jeux" class="button" />
+</form><br/>
+			</div>			
+		</div>
+	<div class="side_column" id="right">
+				<img src="images/right.jpg"/>		
+		</div>		
+	</div>	
+	<div id="footer">
+		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+	</div>
+</div>
 </body>
 </html>
