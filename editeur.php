@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Game On!!!</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images/favicon.png" />
 </head>
 <body>
 <div id="wrap">
@@ -95,7 +98,7 @@ if ($editeur_id) {
 <body>
 
 <form method='POST' action='editeur.php'>
-	<p>Nom du editeur: <input name="editeur_nom" type="text" value="<?php if($l) echo $l['editeur_nom']; ?>" /></p> 
+	<p>Nom de l'éditeur: <input name="editeur_nom" type="text" value="<?php if($l) echo $l['editeur_nom']; ?>" /></p> 
 <!-- la je dis que si il y a un éditeur, j'affiche un formulaire rempli --> 
     <p>Année de création: <input name="editeur_annee" type="text" value="<?php if($l) echo $l['editeur_annee']; ?>" /></p> 
     <p>Pays: <input name="editeur_pays" type="text" value="<?php if($l) echo $l['editeur_pays']; ?>" /></p> 

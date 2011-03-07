@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Game On!!!</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images/favicon.png" />
 </head>
 <body>
 <div id="wrap">

@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 <title>Game On!!!</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images/favicon.png" />
 </head>
 <body>
 <div id="wrap">
@@ -79,7 +82,7 @@ if ($plateforme_id) {
 <body>
 
 <form method='POST' action='plateforme.php'>
-	<p>Nom du plateforme: <input name="plateforme_nom" type="text" value="<?php if($l) echo $l['plateforme_nom']; ?>" /></p> 
+	<p>Nom de la console: <input name="plateforme_nom" type="text" value="<?php if($l) echo $l['plateforme_nom']; ?>" /></p> 
     <p>Constructeur: <input name="plateforme_constructeur" type="text" value="<?php if($l) echo $l['plateforme_constructeur']; ?>" /></p> 
      <p>Prix: <input name="plateforme_prix" type="text" value="<?php if($l) echo $l['plateforme_prix']; ?>" /></p> 
 <?php	if ($l == null) {
