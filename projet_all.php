@@ -9,14 +9,32 @@
       href="images/favicon.png" />
 </head>
 <body>
-<div id="wrap">
-		<div id="innerheader">	
-		</div>		
-		<div id="content">
-		<div class="side_column">		
-			<img src="images/left.jpg" />			
+<div id="page">
+	<div id="header">
+    <a href="projet_hp.php"><span>G</span></a>
+  	</div>
+	<div id="content">
+		<div class="side_column">
+			<h1>Menu</h1>
+			<ul>
+            	<li><form method=get action='projet_all.php'>
+				<input type="submit" value="Liste des jeux" class="button"/>
+				</form></li>
+				<li><form method=get action='jeu.php'>
+				<input type="submit" value="Créer un jeu" class="button"/>
+				</form></li>
+				<li><form method=get action='editeur.php'>
+				<input type="submit" value="Créer un éditeur" class="button"/>
+				</form></li>
+				<li><form method=get action='plateforme.php'>
+				<input type="submit" value="Créer une console" class="button"/>
+				</form></li>
+				<li><form method=get action='package.php'>
+				<input type='submit' value='Lier un jeu à une console' class="button"/>
+				</form></li>
+			</ul>
 		</div>
-			<div id="middle" >	
+		<div id="middle" >	
 <?php
 // Connexion et sélection de la base
 $link = mysql_connect('localhost', 'root', '')
@@ -29,17 +47,18 @@ $result = mysql_query($query) or die('Échec de la requête : ' . mysql_error())
 
 // Affichage des résultats en HTML
 echo "<table border=solid>\n";
+echo "<caption>Liste des jeux</caption>\n";
 echo "<tr>";
-	echo "<td>Nom du jeu</td>";
-	echo "<td>Année de création</td>";
-	echo "<td>Prix (en euros)</td>";
-	echo "<td>Pochette</td>";
-	echo "<td>Editeur</td>";
-	echo "<td>Pays de l'éditeur</td>";
-	echo "<td>Année de création de l'éditeur</td>";
-	echo "<td>Nom de la console</td>";
-	echo "<td>Constructeur</td>";
-	echo "<td>Prix de la console</td>";
+	echo "<th>Nom du jeu</th>";
+	echo "<th>Année de création</th>";
+	echo "<th>Prix (en euros)</th>";
+	echo "<th>Pochette</th>";
+	echo "<th>Editeur</th>";
+	echo "<th>Pays de l'éditeur</th>";
+	echo "<th>Année de création de l'éditeur</th>";
+	echo "<th>Nom de la console</th>";
+	echo "<th>Constructeur</th>";
+	echo "<th>Prix de la console</th>";
 echo "</tr>";
 	
 while ($l = mysql_fetch_array($result, MYSQL_ASSOC)) {
@@ -65,36 +84,17 @@ mysql_free_result($result);
 // Fermeture de la connexion
 mysql_close($link);
 ?>
-<div>
-<form method=get action='jeu.php'>
-	<input type="submit" value="Créer un jeu" class="button"/>
-</form>
-</div>
-<div>
-<form method=get action='editeur.php'>
-	<input type="submit" value="Créer un éditeur" class="button"/>
-</form>
-</div>
-<div>
-<form method=get action='plateforme.php'>
-	<input type="submit" value="Créer une console" class="button"/>
-</form>
-</div>
-<div>
-<form method=get action='package.php'>
-	<input type='submit' value='Créer une distribution' class="button"/>
-</form>
-</div>
-<div>
+<br />
 <a href="projet_hp.php"><img src="images/buttonRetour.png" /></a>
 </div>
+        <div class="side_column">
+        <img src="images/right.jpg" />
 		</div>
-	<div class="side_column" id="right">
-				<img src="images/right.jpg"/>		
-		</div>		
-	</div>	
+		
+	</div>
+	
 	<div id="footer">
-		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
 	</div>
 </div>
 </body>

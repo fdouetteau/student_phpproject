@@ -10,12 +10,30 @@
       href="images/favicon.png" />
 </head>
 <body>
-<div id="wrap">
-		<div id="innerheader">	
-		</div>		
-		<div id="content">
-		<div class="side_column">		
-			<img src="images/left.jpg" />			
+<div id="page">
+	<div id="header">
+    <a href="projet_hp.php"><span>G</span></a>
+  	</div>
+	<div id="content">
+		<div class="side_column">
+			<h1>Menu</h1>
+			<ul>
+            	<li><form method=get action='projet_all.php'>
+				<input type="submit" value="Liste des jeux" class="button"/>
+				</form></li>
+				<li><form method=get action='jeu.php'>
+				<input type="submit" value="Créer un jeu" class="button"/>
+				</form></li>
+				<li><form method=get action='editeur.php'>
+				<input type="submit" value="Créer un éditeur" class="button"/>
+				</form></li>
+				<li><form method=get action='plateforme.php'>
+				<input type="submit" value="Créer une console" class="button"/>
+				</form></li>
+				<li><form method=get action='package.php'>
+				<input type='submit' value='Lier un jeu à une console' class="button"/>
+				</form></li>
+			</ul>
 		</div>
 		<div id="middle" >
 <?php
@@ -47,17 +65,19 @@ mysql_select_db('projet') or die('Impossible de sélectionner la base de donnée
     
   mysql_query($query) or die("Impossible d'insérer l'image: " . mysql_error()); 
 
-  echo "<p>Insertion de l'image effectu&eacute;e</p>"; 
+  echo "<p>Insertion de la pochette effectu&eacute;e</p>"; 
 
-  echo "<p><a href='jeu.php?jeu_id=$jeu_id'>Retour fiche</a></p>"; 
+  echo "<p><a href='jeu.php?jeu_id=$jeu_id'>Retour à la fiche du jeu</a></p>"; 
 ?>
 </div>
-<div class="side_column" id="right">
-				<img src="images/right.jpg"/>		
-		</div>		
-	</div>	
+        <div class="side_column">
+        <img src="images/right.jpg" />
+		</div>
+		
+	</div>
+	
 	<div id="footer">
-		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
 	</div>
 </div>
 </body>

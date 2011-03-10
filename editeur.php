@@ -9,12 +9,30 @@
       href="images/favicon.png" />
 </head>
 <body>
-<div id="wrap">
-		<div id="innerheader">	
-		</div>		
-		<div id="content">
-		<div class="side_column">		
-			<img src="images/left.jpg" />			
+<div id="page">
+	<div id="header">
+    <a href="projet_hp.php"><span>G</span></a>
+  	</div>
+	<div id="content">
+		<div class="side_column">
+			<h1>Menu</h1>
+			<ul>
+            	<li><form method=get action='projet_all.php'>
+				<input type="submit" value="Liste des jeux" class="button"/>
+				</form></li>
+				<li><form method=get action='jeu.php'>
+				<input type="submit" value="Créer un jeu" class="button"/>
+				</form></li>
+				<li><form method=get action='editeur.php'>
+				<input type="submit" value="Créer un éditeur" class="button"/>
+				</form></li>
+				<li><form method=get action='plateforme.php'>
+				<input type="submit" value="Créer une console" class="button"/>
+				</form></li>
+				<li><form method=get action='package.php'>
+				<input type='submit' value='Lier un jeu à une console' class="button"/>
+				</form></li>
+			</ul>
 		</div>
 		<div id="middle" >
 <?php
@@ -119,17 +137,19 @@ if ($editeur_id) {
 <form method='POST' action='editeur.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
 	<input type="hidden" name="action" value="delete"/>
 	<input type="hidden" name="editeur_id" value="<?php echo $editeur_id?>"/>
-	<input type="submit" value="Supprimer ce jeu (et tous les packages associés)" class="button" />
+	<input type="submit" value="Supprimer cet éditeur (et tous les packages associés)" class="button" />
 </form>
-
+<br />
 <a href="projet_all.php"><img src="images/buttonRJ.png" /></a>
+</div>
+        <div class="side_column">
+        <img src="images/right.jpg" />
 		</div>
-<div class="side_column" id="right">
-				<img src="images/right.jpg"/>		
-		</div>		
-	</div>	
+		
+	</div>
+	
 	<div id="footer">
-		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
 	</div>
 </div>
 </body>

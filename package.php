@@ -9,14 +9,32 @@
       href="images/favicon.png" />
 </head>
 <body>
-<div id="wrap">
-		<div id="innerheader">	
-		</div>		
-		<div id="content">
-		<div class="side_column">		
-			<img src="images/left.jpg" />			
+<div id="page">
+	<div id="header">
+    <a href="projet_hp.php"><span>G</span></a>
+  	</div>
+	<div id="content">
+		<div class="side_column">
+			<h1>Menu</h1>
+			<ul>
+            	<li><form method=get action='projet_all.php'>
+				<input type="submit" value="Liste des jeux" class="button"/>
+				</form></li>
+				<li><form method=get action='jeu.php'>
+				<input type="submit" value="Créer un jeu" class="button"/>
+				</form></li>
+				<li><form method=get action='editeur.php'>
+				<input type="submit" value="Créer un éditeur" class="button"/>
+				</form></li>
+				<li><form method=get action='plateforme.php'>
+				<input type="submit" value="Créer une console" class="button"/>
+				</form></li>
+				<li><form method=get action='package.php'>
+				<input type='submit' value='Lier un jeu à une console' class="button"/>
+				</form></li>
+			</ul>
 		</div>
-		<div id="middle" >	
+		<div id="middle" >
 <?php
 // Connexion et sélection de la base
 $link = mysql_connect('localhost', 'root', '')
@@ -80,8 +98,8 @@ if ($package_id) {
 <body>
 
 <form method='POST' action='package.php'>
-    <p>Prix: <input name="package_prix" type="text" value="<?php if($l) echo $l['package_prix']; ?>" /></p> 
-   <p>Jeux : <select name='jeu_id'>
+    <p>Prix du jeu en fonction de la console : <input name="package_prix" type="text" value="<?php if($l) echo $l['package_prix']; ?>" /></p> 
+   <p>Jeu : <select name='jeu_id'>
 	<?php
 	$query = 'SELECT * from jeu'; 
 	$result = mysql_query($query); 
@@ -117,15 +135,17 @@ if ($package_id) {
 	<input type="hidden" name="package_id" value="<?php echo $package_id?>"/>
 	<input type="submit" value="Supprimer ce package" class="button"/>
 </form>
-    
+<br />
 <a href="projet_all.php"><img src="images/buttonRJ.png" /></a>
+</div>
+        <div class="side_column">
+        <img src="images/right.jpg" />
 		</div>
-<div class="side_column" id="right">
-				<img src="images/right.jpg"/>		
-		</div>		
-	</div>	
+		
+	</div>
+	
 	<div id="footer">
-		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
 	</div>
 </div>
 </body>

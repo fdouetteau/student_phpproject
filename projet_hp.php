@@ -9,30 +9,51 @@
       href="images/favicon.png" />
 </head>
 <body>
-<div id="wrap">
-		<div id="innerheader">	
-		</div>		
-		<div id="content">
-		<div class="side_column">		
-			<img src="images/left.jpg" />			
+<div id="page">
+	<div id="header">
+    <a href="projet_hp.php"><span>G</span></a>
+  	</div>
+	<div id="content">
+		<div class="side_column">
+			<h1>Menu</h1>
+			<ul>
+            	<li><form method=get action='projet_all.php'>
+				<input type="submit" value="Liste des jeux" class="button"/>
+				</form></li>
+				<li><form method=get action='jeu.php'>
+				<input type="submit" value="Créer un jeu" class="button"/>
+				</form></li>
+				<li><form method=get action='editeur.php'>
+				<input type="submit" value="Créer un éditeur" class="button"/>
+				</form></li>
+				<li><form method=get action='plateforme.php'>
+				<input type="submit" value="Créer une console" class="button"/>
+				</form></li>
+				<li><form method=get action='package.php'>
+				<input type='submit' value='Lier un jeu à une console' class="button"/>
+				</form></li>
+			</ul>
 		</div>
-			<div id="middle">			
+		<div id="middle" >
 			<h1>Bienvenue sur Game On!!!</h1>
-			<div class="content">				
-				<h2>Découvez ou redécouvrez vos jeux favoris</h2>				
-<br/>Sur Game On, première plate-forme e-commerce de jeux vidéos en Europe, vous allez pouvoir découvrir ou redécouvrir tous vos jeux préférés: rétro-gaming et jeux récents. Tout ici est fait pour que vous puissiez passer des heures et des heures dans votre canapé devant votre console ou alors bien au chaud devant votre ordinateur.<br/>
+			<div class="content">
+				
+				<h2>Découvez ou redécouvrez vos jeux favoris</h2>
+				<br/>Sur Game On, première plate-forme e-commerce de jeux vidéos en Europe, vous allez pouvoir découvrir ou redécouvrir tous vos jeux préférés: rétro-gaming et jeux récents. Tout ici est fait pour que vous puissiez passer des heures et des heures dans votre canapé devant votre console ou alors bien au chaud devant votre ordinateur.<br/>
 Laissez vous tenter...<br/><br/>
 <form method=get action=projet_all.php>
 	<input type="submit" value="Découvrez nos jeux" class="button" />
 </form><br/>
-			</div>			
+			</div>
 		</div>
-	<div class="side_column" id="right">
-				<img src="images/right.jpg"/>		
-		</div>		
-	</div>	
+        <div class="side_column">
+        <img src="images/right.jpg" />
+		</div>
+		
+	</div>
+	
 	<div id="footer">
-		<p>Game On is brought to you by Hassen Aggoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
+		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
 	</div>
 </div>
 </body>
