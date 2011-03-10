@@ -16,10 +16,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `projet`
+-- Base de données: `mariececilehuet-projet`
 --
-CREATE DATABASE `projet` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `projet`;
+-- CREATE DATABASE `mariececilehuet-projet` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `mariececilehuet-projet`;
 
 -- --------------------------------------------------------
 

@@ -40,7 +40,7 @@
 
 $link = mysql_connect('localhost', 'root', '')
     or die('Impossible de se connecter : ' . mysql_error());
-mysql_select_db('projet') or die('Impossible de sélectionner la base de données');
+mysql_select_db('mariececilehuet-projet') or die('Impossible de sélectionner la base de données');
 
   $jeu_id = $_POST['jeu_id'];
 
