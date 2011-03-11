@@ -23,7 +23,7 @@ caption {
  }
 #page {
 	margin:0 auto;
-	background:#e1f1ff url('images/bg_repeat.jpg') repeat-y top center;
+	background:#e1f1ff url('../images/bg_repeat.jpg') repeat-y top center;
 	width:998px;
 	padding:0;
 
@@ -37,7 +37,7 @@ a:hover {
 }
 	#header a {
 			height:150px;
-			background:#FFFFFF url('images/header_image.gif') no-repeat top left;
+			background:#FFFFFF url('../images/header_image.gif') no-repeat top left;
 			width:998px;
 			padding-top:57px;
 			display:block;
@@ -60,7 +60,7 @@ a:hover {
 			.side_column h1 {
 				width:166px;
 				height:32px;
-				background:#d0dfec url('images/side_h1.gif') no-repeat top center;
+				background:#d0dfec url('../images/side_h1.gif') no-repeat top center;
 				margin:0;
 				padding:13px 0 0 64px;
 				font-size:16px;
@@ -80,7 +80,7 @@ a:hover {
 				width:200px;
 				border-bottom:1px solid #cedce9;
 				border-top: 1px solid #FFFFFF;				
-				background-image: url('images/list_bg.gif');
+				background-image: url('../images/list_bg.gif');
 				background-position:center left;
 				background-repeat: no-repeat;
 			}
@@ -116,7 +116,7 @@ a:hover {
 		clear:both;
 		height:38px;
 		padding-top:20px;
-		background:#000000 url('images/footer_repeat.gif') repeat-x top center;
+		background:#000000 url('../images/footer_repeat.gif') repeat-x top center;
 		text-align:center;
 		color:#FFFFFF;
 		font-weight:bold;
