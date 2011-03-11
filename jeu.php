@@ -1,52 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" />
-<title>Game On!!!</title>
-<link rel="icon" 
-      type="image/png" 
-      href="images/favicon.png" />
-</head>
-<body>
-<div id="page">
-	<div id="header">
-    <a href="projet_hp.php"><span>G</span></a>
-  	</div>
-	<div id="content">
-		<div class="side_column">
-			<h1>Menu</h1>
-			<ul>
-            	<li><form method=get action='projet_all.php'>
-				<input type="submit" value="Liste des jeux" class="button"/>
-				</form></li>
-				<li><form method=get action='jeu.php'>
-				<input type="submit" value="Créer un jeu" class="button"/>
-				</form></li>
-				<li><form method=get action='editeur.php'>
-				<input type="submit" value="Créer un éditeur" class="button"/>
-				</form></li>
-				<li><form method=get action='plateforme.php'>
-				<input type="submit" value="Créer une console" class="button"/>
-				</form></li>
-				<li><form method=get action='package.php'>
-				<input type='submit' value='Lier un jeu à une console' class="button"/>
-				</form></li>
-			</ul>
-		</div>
-		<div id="middle" >
 <?php
-// Connexion et sélection de la base
-$link = mysql_connect('localhost', 'root', '')
-    or die('Impossible de se connecter : ' . mysql_error());
-mysql_select_db('mariececilehuet-projet') or die('Impossible de sélectionner la base de données');
+include ('functions.php'); 
+connect(); 
 
 // Suivant les paramètres: affichage d'un jeu existant, création d'un nouveau jeu, confirmation de création ...
 
-
+$content = ""; 
 if (isset($_GET['jeu_id'])) { // READ
 	$jeu_id = $_GET['jeu_id']; 
-	$msg = '';
+
 } else if (isset($_POST['action']) && $_POST['action'] == 'update') { // UPDATE
 		$query = sprintf("UPDATE jeu SET jeu_nom='%s', jeu_annee='%s', editeur_id = '%s' WHERE jeu_id='%s'", 
 				mysql_real_escape_string($_POST['jeu_nom']), 
@@ -55,12 +16,11 @@ if (isset($_GET['jeu_id'])) { // READ
 				mysql_real_escape_string($_POST['jeu_id'])); 
 
 		$result = mysql_query($query) or die ("Impossible de modifier le jeu"); 
-
-		$msg =  '<i>Jeu modifié</i>'; 
+		addMessage("Jeu Modifié"); 
 		$jeu_id = $_POST['jeu_id']; 
 } else if (!isset($_POST['action'])) { // NEW 
 	$jeu_id = null; 
-	$msg = ''; 
+
 } else if (isset($_POST['action']) && $_POST['action'] == 'create') { // CREATE 
 	$query = sprintf("INSERT INTO jeu (`jeu_nom`, `jeu_annee`, `editeur_id`) VALUES ('%s', '%s', '%s')", 
 					mysql_real_escape_string($_POST['jeu_nom']), 
@@ -68,16 +28,14 @@ if (isset($_GET['jeu_id'])) { // READ
 					mysql_real_escape_string($_POST['editeur_id'])); 
 					
 	$result = mysql_query($query) or die ('Impossible de creer un jeu'); 
-		
-	$msg =  '<i>Nouveau jeu créé</i>'; 	
+	addMessage("Nouveau jeu crée"); 
 	$jeu_id = mysql_insert_id(); 
 } else if (isset($_POST['action']) && $_POST['action'] == 'delete') {  // DELETE
 	$query = sprintf("DELETE FROM package, jeu USING package NATURAL JOIN jeu WHERE jeu.jeu_id='%s'", 
 			mysql_real_escape_string($_POST['jeu_id'])); 
 	$result = mysql_query("$query") or die ("Impossible d'effacer le jeu" . mysql_error()); 
 
-	
-	$msg = '<i>Jeu effacé. Vous pouvez créer un nouveau jeu.</i>'; 
+	addMessage("Jeu effacé. Vous pouvez créer un nouveau jeu"); 
 	$jeu_id = null; 
 } 
 
@@ -86,75 +44,51 @@ if ($jeu_id) {
 	// "natural join" est un join que s'effectue sur les colonnes qui ont le même nom entre les deux tables / ici, c'est "editeur_id" / à ne pas confondre avec "inner join" qui dit qu'on n'affiche dans le résultat que les lignes pour lesquelles on a quelque chose venant des deux tables / "outer join": affiche les lignes, même s'il n'y pas de résultat dans une des deux tables / ici on pourrait donc écrire "natural inner join" et ce serait la même chose
 	$result = mysql_query($query) or die('Échec de la requête : ' . $query . "=>". mysql_error());
 	$l =  mysql_fetch_array($result, MYSQL_ASSOC) or die('Impossible de trouver le jeu selectionné ' . $jeu_id );  	
-    echo "<title>{$l['jeu_nom']}</title>";
+    $title = $l['jeu_nom']; 
 } else {
-   echo "<title>Nouveau jeu</title>";
-   $l = null;  
+	$title = "Nouveau jeu"; 
+	   $l = null;  
 }
 
-   echo $msg; 
-?>
-</head>
-<body>
+$content .= "<form method='POST' action='jeu.php'>
+	<p>Nom du jeu: <input name='jeu_nom' type='text' value='$l[jeu_nom]' /></p> 
+    <p>Année de création: <input name='jeu_annee' type='text' value='$l[jeu_annee]' /></p> 
+    <p>Editeur : <select name='editeur_id'>"; 
+		$query = 'SELECT * from editeur'; 
+		$result = mysql_query($query); 
+		while ($e = mysql_fetch_array($result, MYSQL_ASSOC)) {
+			$selected = $e['editeur_id'] == $l['editeur_id']; 
+			$content .= "<option value='{$e['editeur_id']}'" . ($selected ? "selected='selected'" : "" ) . ">{$e['editeur_nom']}</option>"; 
+		}
+$content .= "</select></p>"; 
 
-<form method='POST' action='jeu.php'>
-	<p>Nom du jeu: <input name="jeu_nom" type="text" value="<?php if($l) echo $l['jeu_nom']; ?>" /></p> 
-    <p>Année de création: <input name="jeu_annee" type="text" value="<?php if($l) echo $l['jeu_annee']; ?>" /></p> 
-    <p>Editeur : <select name='editeur_id'>
-	<?php
-	$query = 'SELECT * from editeur'; 
-	$result = mysql_query($query); 
-	while ($e = mysql_fetch_array($result, MYSQL_ASSOC)) {
-		$selected = $e['editeur_id'] == $l['editeur_id']; 
-		echo "<option value='{$e['editeur_id']}'" . ($selected ? "selected='selected'" : "" ) . ">{$e['editeur_nom']}</option>"; 
-	}
-	?>
-</select></p>
-<?php	if ($l == null) {
-		echo '<input type="hidden" name="action" value="create" />';
-		echo '<p><input type="submit" value="Créer" class="button"/></p>';
+if ($l == null) {
+ 	$content .= '<input type="hidden" name="action" value="create" />';
+	$content .= '<p><input type="submit" value="Créer" class="button"/></p>';
 	} else {
-		echo '<input type="hidden" name="action" value="update" />';
-		echo "<input type='hidden' name='jeu_id' value='$jeu_id' />";
-		echo '<p><input type="submit" value="Modifier" class="button"/></p>';
+	$content .= '<input type="hidden" name="action" value="update" />';
+	$content .= "<input type='hidden' name='jeu_id' value='$jeu_id' />";
+	$content .= '<p><input type="submit" value="Modifier" class="button"/></p>';
 	}
-?>
-</form>
 
-<?php
-   echo "<img src='projet_image.php?jeu_id=$jeu_id' />"; 
+$content .= "</form>"; 
+
+$content .= "<img src='projet_image.php?jeu_id=$jeu_id' alt='$l[jeu_nom]' />"; 
    // afficher l'image courante s'il y en a une
+
+$content .= "<!-- formulaire pour uploader une image: --><p>Pochette"; 
+
+/*  "enctype" = encoding type, c'est-à-dire: la manière dont les paramètres vont être passés dans la requête */ 
+$content .= "<form method='POST' action='upload_image.php' enctype='multipart/form-data' >
+	  			<input type='hidden' name='jeu_id' value='$jeu_id' />
+   				<input type='file' name='image'/>
+				<input type='submit' value='Changer la pochette' class='button'>
+			</form>"; 
+$content .= "</p>"; 
+
+if ($jeu_id) {
+	$content .= suppressForm("jeu.php", "jeu_id", $jeu_id, "Supprimer ce jeu et toutes les références produits associées"); 
+}
+
+include ('layout.php'); 
 ?>
-<!-- formulaire pour uploader une image: -->
-<br />
-Pochette:
-<form method='POST' action='upload_image.php' enctype="multipart/form-data" >
-<!-- "enctype" = encoding type, c'est-à-dire: la manière dont les paramètres vont être passés dans la requête -->
-	 <?php
-	echo "<input type='hidden' name='jeu_id' value='$jeu_id' />";
-	// je passe en paramètre l'ID du jeu  
-	 ?>
-	<input type="file" name="image"/>
-	<input type="submit" value="Changer la pochette" class="button">
-</form>
-<br />
-<form method='POST' action='jeu.php' onsubmit="return confirm('Etes-vous sûr de vouloir effacer?')")>
-	<input type="hidden" name="action" value="delete"/>
-	<input type="hidden" name="jeu_id" value="<?php echo $jeu_id?>"/>
-	<input type="submit" value="Supprimer ce jeu (et tous les packages associés)" class="button"/>
-</form>
-<br />
-<a href="projet_all.php"><img src="images/buttonRJ.png" /></a>
-</div>
-        <div class="side_column">
-        <img src="images/right.jpg" />
-		</div>
-		
-	</div>
-	
-	<div id="footer">
-		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
-	</div>
-</div>
-</body>
-</html>
