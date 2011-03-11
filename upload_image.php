@@ -1,46 +1,6 @@
-<!-- ici, c'est pour uploader une image / c'est la page upload OK qui confirme que l'upload a bien été fait que ce soit en create ou en update  -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" />
-<title>Game On!!!</title>
-<link rel="icon" 
-      type="image/png" 
-      href="images/favicon.png" />
-</head>
-<body>
-<div id="page">
-	<div id="header">
-    <a href="projet_hp.php"><span>G</span></a>
-  	</div>
-	<div id="content">
-		<div class="side_column">
-			<h1>Menu</h1>
-			<ul>
-            	<li><form method=get action='projet_all.php'>
-				<input type="submit" value="Liste des jeux" class="button"/>
-				</form></li>
-				<li><form method=get action='jeu.php'>
-				<input type="submit" value="Créer un jeu" class="button"/>
-				</form></li>
-				<li><form method=get action='editeur.php'>
-				<input type="submit" value="Créer un éditeur" class="button"/>
-				</form></li>
-				<li><form method=get action='plateforme.php'>
-				<input type="submit" value="Créer une console" class="button"/>
-				</form></li>
-				<li><form method=get action='package.php'>
-				<input type='submit' value='Lier un jeu à une console' class="button"/>
-				</form></li>
-			</ul>
-		</div>
-		<div id="middle" >
 <?php
-
-$link = mysql_connect('localhost', 'root', '')
-    or die('Impossible de se connecter : ' . mysql_error());
-mysql_select_db('mariececilehuet-projet') or die('Impossible de sélectionner la base de données');
+include ('functions.php'); 
+connect(); 
 
   $jeu_id = $_POST['jeu_id'];
 
@@ -65,20 +25,12 @@ mysql_select_db('mariececilehuet-projet') or die('Impossible de sélectionner la
     
   mysql_query($query) or die("Impossible d'insérer l'image: " . mysql_error()); 
 
-  echo "<p>Insertion de la pochette effectu&eacute;e</p>"; 
+  $title = "Téléchargement d'image"; 
 
-  echo "<p><a href='jeu.php?jeu_id=$jeu_id'>Retour à la fiche du jeu</a></p>"; 
+  $content = ""; 
+
+  addMessage("Insertion de la pochette effectuée");  
+  $content .= "<p><a href='jeu.php?jeu_id=$jeu_id'>Retour à la fiche du jeu</a></p>"; 
+
+include('layout.php'); 
 ?>
-</div>
-        <div class="side_column">
-        <img src="images/right.jpg" />
-		</div>
-		
-	</div>
-	
-	<div id="footer">
-		<p>Game On is brought to you by Hassen Agoun, Matthieu Delporte, Marie-Cécile Huet and Samuel Marc (il est pas beau notre site M. Spanti?)</p>
-	</div>
-</div>
-</body>
-</html>

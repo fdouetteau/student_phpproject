@@ -1,5 +1,7 @@
 <?php
 
+global $content; 
+
 /* Ouvre la connexion et sélectionne la base */ 
 function connect() {
 	mysql_connect('localhost', 'root', '')
@@ -14,6 +16,7 @@ function closeConnection() {
 
 /* Ajoute un message text pour notifier du succès de la dernière action */ 
 function addMessage($msg) {
+	global $content; 
 	$content .= "<div class='msg'>$msg</div>"; 
 } 
 

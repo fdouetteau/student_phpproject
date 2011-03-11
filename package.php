@@ -54,8 +54,7 @@ if ($package_id) {
    $l = null;  
 }
 
-$content .= "<form method='POST' action='package.php'>
-    		<p>Prix du jeu en fonction de la console : <input name='package_prix' type='text' value='$l[package_prix]'/></p>";
+$content .= "<form method='POST' action='package.php'>";
 
 	$content .= "<p>Jeu : <select name='jeu_id'>"; 
 	$query = 'SELECT * from jeu'; 
@@ -66,13 +65,15 @@ $content .= "<form method='POST' action='package.php'>
 	}
 	$content .= "</select></p>";    
 	
- 	$content .= "<p>Plateforme : <select name='plateforme_id'>"; 
+ 	$content .= "<p>Console : <select name='plateforme_id'>"; 
 	$query = 'SELECT * from plateforme'; 
 	$result = mysql_query($query); 
 	while ($e = mysql_fetch_array($result, MYSQL_ASSOC)) {
 		$selected = $e['plateforme_id'] == $l['plateforme_id']; 
 		$content .= "<option value='{$e['plateforme_id']}'" . ($selected ? "selected='selected'" : "" ) . ">{$e['plateforme_nom']}</option>"; 
 	}
+	$content .= "</select></p>"; 
+	$content .= "<p>Prix indicatif : <input name='package_prix' type='text' value='$l[package_prix]'/></p>";
 
 	if ($l == null) {
 		$content .= '<input type="hidden" name="action" value="create" />';
@@ -80,11 +81,11 @@ $content .= "<form method='POST' action='package.php'>
 	} else {
 		$content .= '<input type="hidden" name="action" value="update" />';
 		$content .= "<input type='hidden' name='package_id' value='$package_id' />";
-		$contnet .= '<p><input type="submit" value="Modifier"class="button"/></p>';
+		$content .= '<p><input type="submit" value="Modifier"class="button"/></p>';
 	}
 
 	if ($package_id) {
-		$content .= suppressForm('package.php', 'package_id', $package_id, "Supprimer cette référence produit ?"); 
+		$content .= suppressForm('package.php', 'package_id', $package_id, "Supprimer cette référence produit"); 
 	}
 include ('layout.php'); 
 
